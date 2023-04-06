@@ -1,0 +1,1 @@
+# terraform-self-managed-logscale-aws-k8s-image-swapper

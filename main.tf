@@ -4,6 +4,7 @@ data "aws_caller_identity" "current" {
 resource "helm_release" "k8s_image_swapper" {
   depends_on = [
     aws_iam_role_policy.k8s_image_swapper
+    , kubernetes_secret.kis
   ]
   name       = var.k8s_image_swapper_name
   namespace  = "kube-system"
@@ -33,8 +34,7 @@ config:
 
 secretReader:
     enabled: true  
-awsSecretName: ${aws_iam_user.kis.name}
-# k8s-image-swapper-aws
+awsSecretName: k8s-image-swapper-aws
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -103,7 +103,7 @@ module "irsa_ks" {
   }
 
 }
-resource "kubernetes_secret" "exkisample" {
+resource "kubernetes_secret" "kis" {
   metadata {
     name      = "k8s-image-swapper-aws"
     namespace = "kube-system"
@@ -114,7 +114,7 @@ resource "kubernetes_secret" "exkisample" {
     aws_secret_access_key = aws_iam_access_key.kis.secret
   }
 
-  type = "kubernetes.io/basic-auth"
+  type = "kubernetes.io/generic"
 }
 resource "aws_iam_access_key" "kis" {
   user = aws_iam_user.kis.name

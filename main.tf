@@ -4,7 +4,6 @@ data "aws_caller_identity" "current" {
 resource "helm_release" "k8s_image_swapper" {
   depends_on = [
     aws_iam_role_policy.k8s_image_swapper
-    , kubernetes_secret.kis
   ]
   name       = var.k8s_image_swapper_name
   namespace  = "kube-system"

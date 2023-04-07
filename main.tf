@@ -33,7 +33,8 @@ config:
 
 secretReader:
     enabled: true  
-awsSecretName: k8s-image-swapper-aws
+awsSecretName: ${aws_iam_user.kis.name}
+# k8s-image-swapper-aws
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

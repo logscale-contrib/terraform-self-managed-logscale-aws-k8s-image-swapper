@@ -13,6 +13,9 @@ data "aws_caller_identity" "current" {
 # }
 #k8s-image-swapper helm chart
 resource "helm_release" "k8s_image_swapper" {
+  depends_on = [
+    aws_iam_role_policy.k8s_image_swapper
+  ]
   name       = var.k8s_image_swapper_name
   namespace  = "kube-system"
   repository = "https://estahn.github.io/charts/"
@@ -56,7 +59,7 @@ YAML
 #iam policy for k8s-image-swapper service account
 resource "aws_iam_role_policy" "k8s_image_swapper" {
   name = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}"
-  role = module.irsa_ks.iam_role_arn
+  role = module.irsa_ks.iam_role_name
 
   policy = <<-EOF
 {

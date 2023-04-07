@@ -2,15 +2,15 @@ data "aws_caller_identity" "current" {
 }
 
 
-resource "aws_ecr_repository" "main" {
-  name                 = var.eks_cluster_name
-  image_tag_mutability = "MUTABLE"
+# resource "aws_ecr_repository" "main" {
+#   name                 = var.eks_cluster_name
+#   image_tag_mutability = "MUTABLE"
 
-  image_scanning_configuration {
-    scan_on_push = false
-  }
-  force_delete = true
-}
+#   image_scanning_configuration {
+#     scan_on_push = false
+#   }
+#   force_delete = true
+# }
 #k8s-image-swapper helm chart
 resource "helm_release" "k8s_image_swapper" {
   name       = var.k8s_image_swapper_name

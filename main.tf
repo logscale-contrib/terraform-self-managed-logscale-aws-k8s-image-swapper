@@ -47,7 +47,7 @@ serviceAccount:
   create: true
   # Specifies annotations for this service account
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.k8s_image_swapper.name}"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${module.irsa_ks.name}"
 YAML
     ,
   ]

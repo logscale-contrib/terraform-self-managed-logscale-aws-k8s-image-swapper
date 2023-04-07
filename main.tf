@@ -42,8 +42,8 @@ config:
       accountId: "${data.aws_caller_identity.current.account_id}"
       region: ${var.region}
 
-# secretReader:
-#   enabled: true
+ secretReader:
+   enabled: true
 
 serviceAccount:
   # Specifies whether a service account should be created

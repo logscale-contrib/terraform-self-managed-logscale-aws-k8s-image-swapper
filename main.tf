@@ -65,28 +65,16 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
                 "ecr:DescribeRegistry",
                 "ecr:CreateRepository",
                 "ecr:TagResource",
-                
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchGetImage",
+                "ecr:CompleteLayerUpload",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:InitiateLayerUpload",
+                "ecr:ListImages",
+                "ecr:PutImage",
+                "ecr:UploadLayerPart"
             ],
             "Resource": "*"
-        },
-        {
-            "Sid": "",
-            "Effect": "Allow",
-            "Action": [
-                "ecr:UploadLayerPart",
-                "ecr:PutImage",
-                "ecr:ListImages",
-                "ecr:InitiateLayerUpload",
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:CompleteLayerUpload",
-                "ecr:BatchGetImage",
-                "ecr:BatchCheckLayerAvailability"
-            ],
-            "Resource": [
-              "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/docker.io/*",
-              "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/quay.io/*",
-              "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/gcr.io/*"
-        ]
         }
     ]
 }

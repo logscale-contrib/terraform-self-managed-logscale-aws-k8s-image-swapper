@@ -6,10 +6,7 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 4.45"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.10"
-    }
+    
     helm = {
       source  = "hashicorp/helm"
       version = ">= 2.4"

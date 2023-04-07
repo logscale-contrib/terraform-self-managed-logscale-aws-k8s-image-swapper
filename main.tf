@@ -106,7 +106,7 @@ module "irsa_ks" {
   oidc_providers = {
     main = {
       provider_arn               = var.eks_oidc_provider_arn
-      namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
+      namespace_service_accounts = ["kube-system:k8s-image-swapper"]
     }
   }
 

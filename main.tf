@@ -63,7 +63,9 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
             "Action": [
                 "ecr:GetAuthorizationToken",
                 "ecr:DescribeRepositories",
-                "ecr:DescribeRegistry"
+                "ecr:DescribeRegistry",
+                "ecr:CreateRepository"
+                
             ],
             "Resource": "*"
         },
@@ -76,7 +78,6 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
                 "ecr:ListImages",
                 "ecr:InitiateLayerUpload",
                 "ecr:GetDownloadUrlForLayer",
-                "ecr:CreateRepository",
                 "ecr:CompleteLayerUpload",
                 "ecr:BatchGetImage",
                 "ecr:BatchCheckLayerAvailability"

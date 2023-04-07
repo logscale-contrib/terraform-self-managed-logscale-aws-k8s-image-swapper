@@ -22,7 +22,7 @@ resource "helm_release" "k8s_image_swapper" {
   values = [
     <<YAML
 config:
-  dryRun: true
+  dryRun: ${var.dry_run}
   logLevel: debug
   logFormat: console
 

@@ -8,7 +8,7 @@ variable "eks_cluster_name" {
 }
 
 variable "eks_cluster_oidc_issuer_url" {
-  type = string
+  type        = string
   description = "(optional) describe your variable"
 }
 
@@ -27,4 +27,10 @@ variable "k8s_image_swapper_namespace" {
 variable "k8s_image_swapper_name" {
   default     = "k8s-image-swapper"
   description = "name for k8s-image-swapper release and service account"
+}
+
+variable "dry_run" {
+  type        = string
+  default     = "true"
+  description = "(optional) describe your variable"
 }

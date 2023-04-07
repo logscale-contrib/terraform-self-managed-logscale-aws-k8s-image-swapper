@@ -31,6 +31,6 @@ variable "k8s_image_swapper_name" {
 
 variable "dry_run" {
   type        = string
-  default     = "true"
+  default     = "false"
   description = "(optional) describe your variable"
 }

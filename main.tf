@@ -18,6 +18,7 @@ config:
   logLevel: info
   logFormat: json
 
+  imageCopyPolicy: immediate
   source:
     # Filters provide control over what pods will be processed.
     # By default all pods will be processed. If a condition matches, the pod will NOT be processed.
@@ -40,6 +41,8 @@ serviceAccount:
   # Specifies annotations for this service account
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${module.irsa_ks.iam_role_name}"
+webhook:
+  reinvocationPolicy: IfNeeded
 # certmanager:
 #   enabled: true
 YAML

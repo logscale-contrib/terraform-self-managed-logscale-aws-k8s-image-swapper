@@ -63,7 +63,7 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
             "Sid": "",
             "Effect": "Allow",
             "Action": [
-                "ecr:*",
+                "ecr:*"
 
             ],
             "Resource": "*"

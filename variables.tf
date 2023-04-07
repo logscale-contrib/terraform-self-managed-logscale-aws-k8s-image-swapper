@@ -7,7 +7,7 @@ variable "eks_cluster_name" {
   description = "(optional) describe your variable"
 }
 
-variable "eks_cluster_oidc_issuer_url" {
+variable "eks_oidc_provider_arn" {
   type        = string
   description = "(optional) describe your variable"
 }

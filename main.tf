@@ -84,7 +84,7 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
             "Resource": [
               "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/docker.io/*",
               "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/quay.io/*",
-              "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/gcr.io/*",
+              "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/gcr.io/*"
         ]
         }
     ]

@@ -51,6 +51,8 @@ serviceAccount:
   # Specifies annotations for this service account
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${module.irsa_ks.iam_role_name}"
+certmanager:
+  enabled: true
 YAML
     ,
   ]

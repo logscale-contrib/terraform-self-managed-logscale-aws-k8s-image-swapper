@@ -15,8 +15,8 @@ resource "helm_release" "k8s_image_swapper" {
     <<YAML
 config:
   dryRun: ${var.dry_run}
-  logLevel: debug
-  logFormat: console
+  logLevel: info
+  logFormat: json
 
   source:
     # Filters provide control over what pods will be processed.
@@ -63,7 +63,8 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
                 "ecr:GetAuthorizationToken",
                 "ecr:DescribeRepositories",
                 "ecr:DescribeRegistry",
-                "ecr:CreateRepository"
+                "ecr:CreateRepository",
+                "ecr:TagResource",
                 
             ],
             "Resource": "*"

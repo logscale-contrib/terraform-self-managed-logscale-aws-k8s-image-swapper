@@ -56,7 +56,7 @@ YAML
 #iam policy for k8s-image-swapper service account
 resource "aws_iam_role_policy" "k8s_image_swapper" {
   name = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}"
-  role = aws_iam_role.k8s_image_swapper.id
+  role = module.irsa_ks.iam_role_arn
 
   policy = <<-EOF
 {
@@ -95,27 +95,40 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
 }
 EOF
 }
+module "irsa_ks" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
-#role for k8s-image-swapper service account
-resource "aws_iam_role" "k8s_image_swapper" {
-  name               = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}"
-  assume_role_policy = <<-EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(var.eks_cluster_oidc_issuer_url, "/https:///", "")}"
-      },
-      "Action": "sts:AssumeRoleWithWebIdentity",
-      "Condition": {
-        "StringEquals": {
-          "${replace(var.eks_cluster_oidc_issuer_url, "/https:///", "")}:sub": "system:serviceaccount:${var.k8s_image_swapper_namespace}:${var.k8s_image_swapper_name}"
-        }
-      }
+  role_name = "${var.uniqueName}_kube-system_ebs-csi-controller-sa"
+
+  oidc_providers = {
+    main = {
+      provider_arn               = var.eks_oidc_provider_arn
+      namespace_service_accounts = ["kube-system:ebs-csi-controller-sa"]
     }
-  ]
+  }
+
 }
-EOF
-}
+
+# #role for k8s-image-swapper service account
+# resource "aws_iam_role" "k8s_image_swapper" {
+#   name               = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}"
+#   assume_role_policy = <<-EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Effect": "Allow",
+#       "Principal": {
+#         "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${replace(var.eks_cluster_oidc_issuer_url, "/https:///", "")}"
+#       },
+#       "Action": "sts:AssumeRoleWithWebIdentity",
+#       "Condition": {
+#         "StringEquals": {
+#           "${replace(var.eks_cluster_oidc_issuer_url, "/https:///", "")}:sub": "system:serviceaccount:${var.k8s_image_swapper_namespace}:${var.k8s_image_swapper_name}"
+#         }
+#       }
+#     }
+#   ]
+# }
+# EOF
+# }

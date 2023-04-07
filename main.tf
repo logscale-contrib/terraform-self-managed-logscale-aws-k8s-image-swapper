@@ -31,7 +31,7 @@ config:
     # By default all pods will be processed. If a condition matches, the pod will NOT be processed.
     # For query language details see https://jmespath.org/
     filters:
-      - jmespath: "obj.metadata.namespace != 'default'"
+      - jmespath: "obj.metadata.namespace == 'kube-system'"
       - jmespath: "contains(container.image, '.dkr.ecr.') && contains(container.image, '.amazonaws.com')"
   target:
     type: aws

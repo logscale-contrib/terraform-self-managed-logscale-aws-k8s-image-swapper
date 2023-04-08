@@ -41,8 +41,6 @@ serviceAccount:
   # Specifies annotations for this service account
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${module.irsa_ks.iam_role_name}"
-webhook:
-  reinvocationPolicy: IfNeeded
 # certmanager:
 #   enabled: true
 YAML
@@ -60,13 +58,27 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "",
             "Effect": "Allow",
             "Action": [
-                "ecr:*"
-
+                "ecr:CreateRepository",
+                "ecr:GetAuthorizationToken"
             ],
             "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchGetImage",
+                "ecr:CompleteLayerUpload",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:InitiateLayerUpload",
+                "ecr:ListImages",
+                "ecr:PutImage",
+                "ecr:TagResource",
+                "ecr:UploadLayerPart"
+            ],
+            "Resource": "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/*",
         }
     ]
 }

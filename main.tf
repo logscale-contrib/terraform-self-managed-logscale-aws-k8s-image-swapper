@@ -78,7 +78,7 @@ resource "aws_iam_role_policy" "k8s_image_swapper" {
                 "ecr:TagResource",
                 "ecr:UploadLayerPart"
             ],
-            "Resource": "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/*",
+            "Resource": "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/*"
         }
     ]
 }
@@ -98,67 +98,3 @@ module "irsa_ks" {
 
 }
 
-# resource "kubernetes_secret" "kis" {
-#   metadata {
-#     name      = "k8s-image-swapper-aws"
-#     namespace = "kube-system"
-#   }
-
-#   data = {
-#     aws_access_key_id     = aws_iam_access_key.kis.id
-#     aws_secret_access_key = aws_iam_access_key.kis.secret
-#   }
-
-#   type = "kubernetes.io/generic"
-# }
-# resource "aws_iam_access_key" "kis" {
-#   user = aws_iam_user.kis.name
-
-# }
-# resource "aws_iam_user" "kis" {
-#   name = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}"
-#   path = "/"
-# }
-
-# #iam policy for k8s-image-swapper service account
-# resource "aws_iam_user_policy" "k8s_image_swapper" {
-#   name = "${var.eks_cluster_name}-${var.k8s_image_swapper_name}-user"
-#   user = aws_iam_user.kis.name
-
-#   policy = <<-EOF
-# {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Sid": "",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "ecr:GetAuthorizationToken",
-#                 "ecr:DescribeRepositories",
-#                 "ecr:DescribeRegistry"
-#             ],
-#             "Resource": "*"
-#         },
-#         {
-#             "Sid": "",
-#             "Effect": "Allow",
-#             "Action": [
-#                 "ecr:UploadLayerPart",
-#                 "ecr:PutImage",
-#                 "ecr:ListImages",
-#                 "ecr:InitiateLayerUpload",
-#                 "ecr:GetDownloadUrlForLayer",
-#                 "ecr:CreateRepository",
-#                 "ecr:CompleteLayerUpload",
-#                 "ecr:BatchGetImage",
-#                 "ecr:BatchCheckLayerAvailability"
-#             ],
-#             "Resource": [
-#               "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/docker.io/*",
-#               "arn:aws:ecr:*:${data.aws_caller_identity.current.account_id}:repository/quay.io/*"
-#         ]
-#         }
-#     ]
-# }
-# EOF
-# }
